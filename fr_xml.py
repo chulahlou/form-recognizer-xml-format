@@ -75,16 +75,16 @@ def format_result_as_xml(data):
 if __name__ == "__main__":
     file_name = "Sample-Amendment"
 
-    # result = call_fr_api(file_name)
-    # result = result.to_dict()
+    result = call_fr_api(file_name)
+    result = result.to_dict()
 
     # Store as JSON result
-    # with open(f"docs/{file_name}.json", "w") as f:
-    #     json.dump(result, f, indent=4)
+    with open(f"docs/{file_name}.json", "w") as f:
+        json.dump(result, f, indent=4)
 
     # Load from stored JSON results
-    with open(f"docs/{file_name}.json", "r") as f:
-        result = json.load(f)
+    # with open(f"docs/{file_name}.json", "r") as f:
+    #     result = json.load(f)
 
     xml = format_result_as_xml(result)
 
