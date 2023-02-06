@@ -1,4 +1,8 @@
 import json
+from lxml import etree
+import xml.etree.ElementTree as ET
+import xml.dom.minidom as xmldom
+
 
 from azure.ai.formrecognizer import DocumentAnalysisClient
 from azure.core.credentials import AzureKeyCredential
@@ -15,6 +19,14 @@ def call_fr_api(file_name):
         poller = document_analysis_client.begin_analyze_document("prebuilt-document", f)
     api_result = poller.result()
     return api_result
+
+
+def indent_xml(data):
+    parser = etree.XMLParser(recover=True)
+    parent = ET.fromstring(data, parser=parser)
+    print(type(parent))
+    xmlstr = xmldom.parseString(ET.tostring(parent)).toprettyxml()
+    return xmlstr
 
 
 def format_result_as_xml(data):
@@ -87,8 +99,8 @@ if __name__ == "__main__":
     #     result = json.load(f)
 
     xml = format_result_as_xml(result)
+    xml_indent = indent_xml(xml)
 
     with open(f"docs/{file_name}.xml", "w") as f:
-        f.write(xml)
+        f.write(xml_indent)
 
-    # Use a formatter e.g. https://jsonformatter.org/xml-formatter to get nice spacing
