@@ -1,0 +1,2 @@
+azure-ai-formrecognizer~=3.2
+lxml==4.9.2
